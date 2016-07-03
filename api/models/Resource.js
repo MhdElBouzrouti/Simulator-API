@@ -28,10 +28,6 @@ module.exports = {
     },
     scope:{
       type:'string'
-    },
-    results:{
-      collection:'result',
-      via:'resource_api'
     }
   }
 };

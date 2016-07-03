@@ -22,9 +22,6 @@ module.exports = {
     },
     calledByToken:{
       model:'token'
-    },
-    resource_api:{
-      model:'resource'
     }
   }
 };
