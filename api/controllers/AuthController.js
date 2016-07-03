@@ -200,7 +200,7 @@ module.exports = {
             function findPartner(err, partner) {
               if (err) return res.json(500, {error: err, type: 'find partner'});
               if (!partner) return res.json(404, {error: 'partner not founded'});
-              user.partners.add(partner);
+             // user.partners.add(partner);
               user.save(editUser);
               function editUser(err, editUser) {
                 if (err) return res.json(500, {error: err, type: 'edit user'});
