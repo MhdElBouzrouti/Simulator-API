@@ -71,7 +71,7 @@ module.exports = {
     function tokenRequest(tokenError, tokenResponse) {
       if (tokenError) {
         sails.log.error(tokenError);
-        return res.json(500,{error:tokenError});
+        return res.json(500,{error:tokenError,type:'token error'});
       }
        // Logs response properties
       sails.log.info('============  Begin TOKEN RESPONSE Request ============');
@@ -84,7 +84,7 @@ module.exports = {
       if (token.error) {
         sails.log.error(token);
         _token_result.error=token;
-        return res.json(404,{error:token});
+        return res.json(404,{error:token,type:'token error'});
       }
       // GET Id_token
       var id_token;
@@ -93,7 +93,7 @@ module.exports = {
       }
       else {
         sails.log.warn('The id_token not founded');
-        return res.json(404,{error:'The id_token not founded, you have to use a openid scope'});
+        return res.json(404,{error:'The id_token not founded, you have to use a openid scope',type:'token error'});
       }
 
       if(token.access_token){
@@ -102,7 +102,7 @@ module.exports = {
       else
       {
         sails.log.error('[access_token] : not founded');
-        return res.json(500,{error:'access token not founded'});
+        return res.json(500,{error:'access token not founded',type:'token error'});
       }
 
       // Step 2. Retrieve resource from API.
@@ -116,11 +116,11 @@ module.exports = {
       function resourceRequest(resourceError, resourceResponse) {
         if (resourceError) {
           sails.log.error(resourceError);
-          return res.json(404,{error:resourceError});
+          return res.json(404,{error:resourceError,type:'resource API'});
         }
         if (resourceResponse.body.error) {
           sails.log.error(resourceResponse.body.error);
-          return res.json(404,{error:resourceResponse.body});
+          return res.json(404,{error:resourceResponse.body,type:'resource API'});
         }
         // Logs Response RESOURCE API
         sails.log.info('============  Begin Resource RESPONSE Request ==============');
@@ -131,7 +131,7 @@ module.exports = {
         var sub_id=_.split(id_token,'-',1)[0];
         User.findOne({sub_id:sub_id}).populate('partners').exec(findUser);
         function findUser(err, user) {
-          if (err) return res.json(500,{error:err});
+          if (err) return res.json(500,{error:err,type:'user error'});
           if (!user) {
             // add user
             User.create({
@@ -143,7 +143,7 @@ module.exports = {
             }).exec(createUser);
             function createUser(err, newUser) {
               if(err)
-                return res.json(500,{error:err});
+                return res.json(500,{error:err,type:'cration of user'});
               newUser.partners.add(id_token.aud[0]);
               // add token
               Token.create({
@@ -155,7 +155,7 @@ module.exports = {
                 resource:ConfigService.RESOURCE_URL
               }).exec(createToken);
               function createToken(err,newToken) {
-                if(err) return res.json(500,{error:err});
+                if(err) return res.json(500,{error:err,type:'creation token'});
                 if(!newToken) return res.json(500,{error:'Error of creation of token'});
                 newUser.tokens.add(newToken);
                 newUser.save(function (err, updateUser) {
