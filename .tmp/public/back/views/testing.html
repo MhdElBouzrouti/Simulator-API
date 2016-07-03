@@ -1,0 +1,42 @@
+<!-- BEGIN MAIN CONTENT -->
+<div ng-controller="TestingController">
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="portlet box yellow-gold">
+        <div class="portlet-title">
+          <div class="caption">
+            <i class="fa fa-cogs"></i>API Response Result</div>
+        </div>
+        <div class="portlet-body flip-scroll">
+          <table class="table table-bordered table-striped table-condensed flip-content">
+            <thead class="flip-content">
+            <tr>
+              <th> URL</th>
+              <th> Status</th>
+              <th class="numeric"> Response Time </th>
+              <th class="numeric"> Date </th>
+              <th width="20%"> Result </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="rs in results">
+              <td> {{rs.url}} </td>
+              <td> {{rs.statusCode}} </td>
+              <td> {{rs.responseTime}} ms</td>
+              <td class="numeric">{{rs.createdAt}}</td>
+              <td class="numeric"> <json-formatter json="rs.result" open="0"></json-formatter> </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END MAIN CONTENT -->
+<!-- BEGIN MAIN JS & CSS -->
+<script>
+  Dashboard.init();
+</script>
+<!-- BEGIN MAIN JS & CSS -->

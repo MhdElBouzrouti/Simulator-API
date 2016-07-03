@@ -1,0 +1,132 @@
+<!-- BEGIN MAIN CONTENT -->
+<div ng-controller="DashboardController">
+  <div class="row">
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+      <a class="dashboard-stat dashboard-stat-v2 blue" href="#">
+        <div class="visual">
+          <i class="fa fa-user"></i>
+        </div>
+        <div class="details">
+          <div class="number">
+            <span data-counter="counterup" data-value="1349">{{users_length}}</span>
+          </div>
+          <div class="desc"> Users Authentificated</div>
+        </div>
+      </a>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+      <a class="dashboard-stat dashboard-stat-v2 yellow-crusta" href="#">
+        <div class="visual">
+          <i class="fa fa-user"></i>
+        </div>
+        <div class="details">
+          <div class="number">
+            <span data-counter="counterup" data-value="1349">25</span>
+          </div>
+          <div class="desc"> APIs Called</div>
+        </div>
+      </a>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+      <a class="dashboard-stat dashboard-stat-v2 green-jungle" href="#">
+        <div class="visual">
+          <i class="fa fa-building"></i>
+        </div>
+        <div class="details">
+          <div class="number">
+            <span data-counter="counterup" data-value="1349">{{partner_length}}</span>
+          </div>
+          <div class="desc"> Number of partners</div>
+        </div>
+      </a>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+      <a class="dashboard-stat dashboard-stat-v2 yellow-gold" href="#">
+        <div class="visual">
+          <i class="fa fa-cogs"></i>
+        </div>
+        <div class="details">
+          <div class="number">
+            <span data-counter="counterup" data-value="1349">{{resource_length}}</span>
+          </div>
+          <div class="desc"> Number of APIs</div>
+        </div>
+      </a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-9 col-sm-6">
+      <div class="portlet light ">
+        <div class="portlet-title">
+          <div class="caption caption-md">
+            <i class="icon-bar-chart font-dark hide"></i>
+            <span class="caption-subject font-dark bold uppercase">User Details</span>
+            <span class="caption-helper">Global stats...</span>
+          </div>
+        </div>
+        <div class="portlet-body">
+          <div class="table-scrollable table-scrollable-borderless">
+            <table class="table table-hover table-light">
+              <thead>
+              <tr class="uppercase">
+                <th colspan="2"> USER </th>
+                <th> ID </th>
+                <th> Authorization time </th>
+              </tr>
+              </thead>
+              <tr ng-repeat="user in users">
+                <td class="fit">
+                  <img class="user-pic rounded" src="../assets/pages/media/pages/avatar.png"> </td>
+                <td>
+                  <a href="javascript:;" class="primary-link">{{user.name}}</a>
+                </td>
+                <td> {{user.sub}}</td>
+                <td> {{user.auth_time * 1000 | date:'yyyy/MM/dd HH:mm:ss Z'}}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+      <div class="portlet light portlet-fit">
+        <div class="portlet-title">
+          <div class="caption">
+            <i class=" icon-layers font-green"></i>
+            <span class="caption-subject font-green bold uppercase">Status Code</span>
+          </div>
+        </div>
+        <div class="portlet-body">
+          <canvas id="doughnut" class="chart chart-doughnut" chart-data="data_staus" chart-labels="labels_status" chart-colours="colours_status"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+      <div class="portlet light portlet-fit">
+        <div class="portlet-title">
+          <div class="caption">
+            <i class=" icon-layers font-green"></i>
+            <span class="caption-subject font-green bold uppercase">API CALL</span>
+          </div>
+        </div>
+        <div class="portlet-body">
+          <canvas id="line" class="chart chart-line" chart-data="data_api"
+                  chart-labels="labels_api" chart-series="series_api" chart-colours="colours"
+          >
+          </canvas>
+        </div>
+      </div>
+    </div>
+    </div>
+
+  </div>
+
+
+  <!-- END MAIN CONTENT -->
+  <!-- BEGIN MAIN JS & CSS -->
+  <script>
+    Dashboard.init();
+  </script>
+  <!-- BEGIN MAIN JS & CSS -->

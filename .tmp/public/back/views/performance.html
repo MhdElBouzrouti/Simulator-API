@@ -1,0 +1,90 @@
+<!-- BEGIN MAIN CONTENT -->
+<div ng-controller="PerformanceController">
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="portlet box yellow-gold ">
+        <div class="portlet-title">
+          <div class="caption">
+            <i class="fa fa-gift"></i> Settings </div>
+        </div>
+        <div class="portlet-body form">
+          <form role="form" class="form-horizontal">
+            <div class="form-body">
+              <div class="form-group">
+                <label class="col-md-3 control-label">Api Resource</label>
+                <div class="col-md-9">
+                  <select class="form-control" ng-model="selectedToken">
+                    <option ng-repeat="token in tokens" value="{{token.id}}">{{token.resource}} -- {{token.exp * 1000 | date:'yyyy/MM/dd HH:mm:ss Z'}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-3 control-label">Number of Times</label>
+                <div class="col-md-9">
+                  <input type="number" placeholder="Example: 10" ng-model="times" class="form-control"> </div>
+              </div>
+            </div>
+            <div class="form-actions right1">
+
+              <button class="btn yellow-gold" type="submit" ng-click="callResource()">Start</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="portlet box yellow-gold">
+        <div class="portlet-title">
+          <div class="caption">
+            <i class="fa fa-cogs"></i>API Response Result</div>
+        </div>
+        <div class="portlet-body flip-scroll">
+          <table class="table table-bordered table-striped table-condensed flip-content">
+            <thead class="flip-content">
+            <tr>
+              <th> Status</th>
+              <th class="numeric"> Response Time </th>
+              <th width="40%"> Result </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="pfs in performResults">
+              <td> {{pfs.status}} </td>
+              <td> {{pfs.responseTime}} ms</td>
+              <td class="numeric"> <json-formatter json="pfs.result" open="0"></json-formatter> </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="portlet box yellow-gold">
+        <div class="portlet-title">
+          <div class="caption">
+            <i class=" icon-layers"></i>
+            API CALL
+          </div>
+        </div>
+        <div class="portlet-body">
+          <canvas id="line" class="chart chart-line" chart-data="data_api"
+                  chart-labels="labels_api" chart-series="series_api" chart-colours="colours"
+          >
+          </canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END MAIN CONTENT -->
+<!-- BEGIN MAIN JS & CSS -->
+<script>
+  Dashboard.init();
+</script>
+<!-- BEGIN MAIN JS & CSS -->

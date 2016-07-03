@@ -1,0 +1,11 @@
+module.exports = {
+  CLIENT_ID:'',
+  CLIENT_SECRET: '',
+  TOKEN_SECRET: 'Mohammed',
+  ACCESS_TOKEN_URL:'',
+  USER_INFO_URL:'',
+  RESOURCE_URL:'',
+  REDIRECT_URI:'',
+  AUTHORIZATION_HEADER:''
+
+};

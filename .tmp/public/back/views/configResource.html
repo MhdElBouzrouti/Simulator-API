@@ -1,0 +1,150 @@
+<!-- BEGIN MAIN CONTENT -->
+<div ng-controller="ConfigResourceController">
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="tabbable-line boxless tabbable-reversed">
+            <div class="portlet box yellow-gold">
+              <div class="portlet-title">
+                <div class="caption">
+                  <i class="fa fa-gift"></i>API Resource Settings
+                </div>
+              </div>
+              <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                <form action="#" class="form-horizontal">
+                  <div class="form-body">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="col-md-3 control-label">Description</label>
+                          <div class="col-md-4">
+                            <input type="text" ng-model="description" class="form-control input-circle" placeholder="Enter Description">
+                            <span class="help-block"> Example: Authorization </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6"> <div class="form-group">
+                        <label class="col-md-3 control-label">Offer :</label>
+                        <div class="col-md-4">
+                          <input type="text" ng-model="offer" class="form-control input-circle" placeholder="Enter Offer Name">
+                          <span class="help-block"> Example: openidconnect</span>
+                        </div>
+                      </div></div>
+                      <div class="col-md-6"> <div class="form-group">
+                        <label class="col-md-3 control-label">Country Code :</label>
+                        <div class="col-md-4">
+                          <input type="text" ng-model="country" class="form-control input-circle" placeholder="Enter Country Code">
+                          <span class="help-block"> Example: fr</span>
+                        </div>
+                      </div></div>
+                      </div>
+                    <div class="row">
+                      <div class="col-md-6"><div class="form-group">
+                        <label class="col-md-3 control-label">Version</label>
+                        <div class="col-md-4">
+                          <input type="text" ng-model="version" class="form-control input-circle" placeholder="Enter version">
+                          <span class="help-block"> Example: v1 or beta</span>
+                        </div>
+                      </div></div>
+                      <div class="col-md-6"> <div class="form-group">
+                        <label class="col-md-3 control-label">Path :</label>
+                        <div class="col-md-4">
+                          <input type="text" ng-model="path" class="form-control input-circle" placeholder="Entrer Path">
+                          <span class="help-block"> Example: authorize</span>
+                        </div>
+                      </div></div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6"> <div class="form-group">
+                        <label class="col-md-3 control-label">Scope :</label>
+                        <div class="col-md-4">
+                          <input type="text" ng-model="scope" class="form-control input-circle" placeholder="Enter scope">
+                          <span class="help-block"> Example: openid</span>
+                        </div>
+                      </div></div>
+                      <div class="col-md-6"> <div class="form-group">
+                        <label class="col-md-3 control-label">Base URL <span aria-required="true" class="required"> * </span></label>
+                        <div class="col-md-4">
+                          <input type="text" ng-model="base_url" class="form-control input-circle" data-required="1" placeholder="Enter URL">
+                          <span class="help-block"> Example: https://api.orange.com</span>
+                        </div>
+                      </div></div>
+                    </div>
+
+                    <div class="form-group last">
+                      <label class="col-md-3 control-label bold">API URL</label>
+                      <div class="col-md-4">
+                        <span class="form-control-static bold"> {{base_url}}/{{offer}}/{{country}}/{{version}}/{{path}}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-actions">
+                    <div class="row">
+                      <div class="col-md-offset-3 col-md-9">
+                        <button type="button" ng-click="addApiResource()" class="btn btn-circle yellow-gold">Add</button>
+                        <button type="button" class="btn btn-circle grey-salsa btn-outline">Cancel</button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+                <!-- END FORM-->
+              </div>
+            </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <!-- BEGIN SAMPLE TABLE PORTLET-->
+      <div class="portlet box yellow-gold">
+        <div class="portlet-title">
+          <div class="caption">
+            <i class="fa fa-bell-o"></i>Api Resource List </div>
+        </div>
+        <div class="portlet-body">
+          <div class="table-scrollable">
+            <table class="table table-striped table-bordered table-advance table-hover">
+              <thead>
+              <tr>
+                <th>
+                  <i class="fa fa-briefcase"></i> Description </th>
+                <th>
+                  <i class="fa fa-user"></i> API URL </th>
+                <th> </th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr ng-repeat=" resource in apiResources">
+                <td class="highlight">
+                  <div class="warning"></div>
+                  <a href="javascript:;"> {{resource.description}} </a>
+                </td>
+                <td class="hidden-xs"> {{resource.base}}/{{resource.offer}}/{{resource.country}}/{{resource.version}}/{{resource.path}} </td>
+
+                <td>
+                  <a href="javascript:;" class="btn btn-outline btn-circle btn-sm purple">
+                    <i class="fa fa-remove"></i> Remove </a>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!-- END SAMPLE TABLE PORTLET-->
+    </div>
+  </div>
+
+</div>
+<!-- END MAIN CONTENT -->
+<!-- BEGIN MAIN JS & CSS -->
+<script>
+  Dashboard.init();
+</script>
+<!-- BEGIN MAIN JS & CSS -->
