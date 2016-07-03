@@ -159,7 +159,7 @@ module.exports = {
                 if(!newToken) return res.json(500,{error:'Error of creation of token'});
                 newUser.tokens.add(newToken);
                 newUser.save(function (err, updateUser) {
-                  if(err) return res.json(500,{error:err});
+                  if(err) return res.json(500,{error:err,type:'save new user'});
                   if(!updateUser) return res.json(500,{error:'User not updated'});
                   Result.create({
                     result:JSON.parse(resourceResponse.body),
@@ -185,7 +185,7 @@ module.exports = {
             user.partners.add(id_token.aud[0]);
             user.save(editUser);
             function editUser(err, editUser) {
-              if(err) return res.json(500,{error:err});
+              if(err) return res.json(500,{error:err,type:'edit user'});
               Token.create({
                 access_token:_token_result.access_token,
                 iat: id_token.iat,
@@ -194,7 +194,7 @@ module.exports = {
                 responseTime: tokenResponse.elapsedTime
               }).exec(createToken);
               function createToken(err,newToken) {
-                if(err) return res.json(500,{error:err});
+                if(err) return res.json(500,{error:err,type:'creation of token'});
                 if(!newToken) return res.json(500,{error:'Error of creation of token'});
                 newToken.byUser=editUser;
                 newToken.save(function () {
