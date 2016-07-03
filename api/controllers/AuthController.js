@@ -144,80 +144,94 @@ module.exports = {
             function createUser(err, newUser) {
               if(err)
                 return res.json(500,{error:err,type:'cration of user'});
-              newUser.partners.add(id_token.aud[0]);
-              // add token
-              Token.create({
-                access_token: _token_result.access_token,
-                iat: id_token.iat,
-                exp: id_token.exp,
-                responseTime: tokenResponse.elapsedTime,
-                statusCode:tokenResponse.statusCode,
-                resource:ConfigService.RESOURCE_URL
-              }).exec(createToken);
-              function createToken(err,newToken) {
-                if(err) return res.json(500,{error:err,type:'creation token'});
-                if(!newToken) return res.json(500,{error:'Error of creation of token'});
-                newUser.tokens.add(newToken);
-                newUser.save(function (err, updateUser) {
-                  if(err) return res.json(500,{error:err,type:'save new user'});
-                  if(!updateUser) return res.json(500,{error:'User not updated'});
-                  Result.create({
-                    result:JSON.parse(resourceResponse.body),
-                    responseTime:resourceResponse.elapsedTime,
-                    url:ConfigService.RESOURCE_URL,
-                    statusCode:resourceResponse.statusCode}).exec(createResult);
-                  function createResult(error,newResult) {
-                    if(error) return res.json(500,{error:error,result:JSON.parse(resourceResponse.body)});
-                    if(!newResult) return res.json(500,{error:'Error Of creation of new Result',result:JSON.parse(resourceResponse.body)});
-                    newResult.calledByToken=newToken;
-                    newResult.save(function (err,rs) {
-                      if(err) return res.json(500,{error:err,result:JSON.parse(resourceResponse.body)});
-                      if(!rs) return res.json(500,{error:'result of api not saved',result:JSON.parse(resourceResponse.body)});
-                      return res.json(200,JSON.parse(resourceResponse.body));
+
+              Partner.findOne({client_id:id_token.aud[0]}).exec(findPartner);
+              function findPartner(err, partner) {
+                if(err) return res.json(500,{error:err,type:'find partner'});
+                if(!partner) return res.json(404,{error:'Partner no founded'});
+                newUser.partners.add(partner);
+                newUser.save(addPartner);
+                function addPartner(err,editUser){
+                  Token.create({
+                    access_token: _token_result.access_token,
+                    iat: id_token.iat,
+                    exp: id_token.exp,
+                    responseTime: tokenResponse.elapsedTime,
+                    statusCode:tokenResponse.statusCode,
+                    resource:ConfigService.RESOURCE_URL
+                  }).exec(createToken);
+                  function createToken(err,newToken) {
+                    if(err) return res.json(500,{error:err,type:'creation token'});
+                    if(!newToken) return res.json(500,{error:'Error of creation of token'});
+                    newUser.tokens.add(newToken);
+                    newUser.save(function (err, updateUser) {
+                      if(err) return res.json(500,{error:err,type:'save new user'});
+                      if(!updateUser) return res.json(500,{error:'User not updated'});
+                      Result.create({
+                        result:JSON.parse(resourceResponse.body),
+                        responseTime:resourceResponse.elapsedTime,
+                        url:ConfigService.RESOURCE_URL,
+                        statusCode:resourceResponse.statusCode}).exec(createResult);
+                      function createResult(error,newResult) {
+                        if(error) return res.json(500,{error:error,result:JSON.parse(resourceResponse.body)});
+                        if(!newResult) return res.json(500,{error:'Error Of creation of new Result',result:JSON.parse(resourceResponse.body)});
+                        newResult.calledByToken=newToken;
+                        newResult.save(function (err,rs) {
+                          if(err) return res.json(500,{error:err,result:JSON.parse(resourceResponse.body)});
+                          if(!rs) return res.json(500,{error:'result of api not saved',result:JSON.parse(resourceResponse.body)});
+                          return res.json(200,JSON.parse(resourceResponse.body));
+                        });
+                      }
                     });
                   }
-                });
+                }
               }
             }
           } else {
             user.auth_time = id_token.auth_time;
             user.auth_code = id_token.auth_code;
-            user.partners.add(id_token.aud[0]);
-            user.save(editUser);
-            function editUser(err, editUser) {
-              if(err) return res.json(500,{error:err,type:'edit user'});
-              Token.create({
-                access_token:_token_result.access_token,
-                iat: id_token.iat,
-                exp: id_token.exp,
-                resource:ConfigService.RESOURCE_URL,
-                responseTime: tokenResponse.elapsedTime
-              }).exec(createToken);
-              function createToken(err,newToken) {
-                if(err) return res.json(500,{error:err,type:'creation of token'});
-                if(!newToken) return res.json(500,{error:'Error of creation of token'});
-                newToken.byUser=editUser;
-                newToken.save(function () {
+            Partner.findOne({client_id:id_token.aud[0]}).exec(findPartner);
+            function findPartner(err,partner){
+              if(err) return res.json(500,{error:err,type:'find partner'});
+              if(!partner) return res.json(404,{error:'partner not founded'});
+              user.partners.add(partner);
+              user.save(editUser);
+              function editUser(err, editUser) {
+                if(err) return res.json(500,{error:err,type:'edit user'});
+                Token.create({
+                  access_token:_token_result.access_token,
+                  iat: id_token.iat,
+                  exp: id_token.exp,
+                  resource:ConfigService.RESOURCE_URL,
+                  responseTime: tokenResponse.elapsedTime
+                }).exec(createToken);
+                function createToken(err,newToken) {
+                  if(err) return res.json(500,{error:err,type:'creation of token'});
+                  if(!newToken) return res.json(500,{error:'Error of creation of token'});
+                  newToken.byUser=editUser;
+                  newToken.save(function () {
 
-                  Result.create({
-                    result:JSON.parse(resourceResponse.body),
-                    responseTime:resourceResponse.elapsedTime,
-                    statusCode:resourceResponse.statusCode,
-                    url:ConfigService.RESOURCE_URL
-                  }).exec(createResult);
-                  function createResult(error,newResult) {
-                    if(error) return res.json(500,{error:err,result:JSON.parse(resourceResponse.body)});
-                    if(!newResult) return res.json(500,{error:'Error Of creation of new Result'});
-                    newResult.calledByToken=newToken;
-                    newResult.save(function (err,rs) {
-                      return res.json(200,JSON.parse(resourceResponse.body));
-                    });
-                  }
-                });
+                    Result.create({
+                      result:JSON.parse(resourceResponse.body),
+                      responseTime:resourceResponse.elapsedTime,
+                      statusCode:resourceResponse.statusCode,
+                      url:ConfigService.RESOURCE_URL
+                    }).exec(createResult);
+                    function createResult(error,newResult) {
+                      if(error) return res.json(500,{error:err,result:JSON.parse(resourceResponse.body)});
+                      if(!newResult) return res.json(500,{error:'Error Of creation of new Result'});
+                      newResult.calledByToken=newToken;
+                      newResult.save(function (err,rs) {
+                        return res.json(200,JSON.parse(resourceResponse.body));
+                      });
+                    }
+                  });
+
+                }
 
               }
-
             }
+
           }
         }
       }
