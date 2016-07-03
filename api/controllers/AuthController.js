@@ -162,7 +162,7 @@ module.exports = {
                   if(err) return res.json(500,{error:err});
                   if(!updateUser) return res.json(500,{error:'User not updated'});
                   Result.create({
-                    result:resourceResponse.body,
+                    result:JSON.parse(resourceResponse.body),
                     responseTime:resourceResponse.elapsedTime,
                     url:ConfigService.RESOURCE_URL,
                     statusCode:resourceResponse.statusCode}).exec(createResult);
@@ -198,14 +198,15 @@ module.exports = {
                 if(!newToken) return res.json(500,{error:'Error of creation of token'});
                 newToken.byUser=editUser;
                 newToken.save(function () {
+
                   Result.create({
-                    result:resourceResponse.body,
+                    result:JSON.parse(resourceResponse.body),
                     responseTime:resourceResponse.elapsedTime,
                     statusCode:resourceResponse.statusCode,
                     url:ConfigService.RESOURCE_URL
                   }).exec(createResult);
                   function createResult(error,newResult) {
-                    if(error) return res.json(500,{error:err});
+                    if(error) return res.json(500,{error:err,result:JSON.parse(resourceResponse.body)});
                     if(!newResult) return res.json(500,{error:'Error Of creation of new Result'});
                     newResult.calledByToken=newToken;
                     newResult.save(function (err,rs) {
