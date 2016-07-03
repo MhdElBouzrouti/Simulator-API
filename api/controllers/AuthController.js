@@ -167,12 +167,12 @@ module.exports = {
                     url:ConfigService.RESOURCE_URL,
                     statusCode:resourceResponse.statusCode}).exec(createResult);
                   function createResult(error,newResult) {
-                    if(error) return res.json(500,{error:error});
-                    if(!newResult) return res.json(500,{error:'Error Of creation of new Result'});
+                    if(error) return res.json(500,{error:error,result:JSON.parse(resourceResponse.body)});
+                    if(!newResult) return res.json(500,{error:'Error Of creation of new Result',result:JSON.parse(resourceResponse.body)});
                     newResult.calledByToken=newToken;
                     newResult.save(function (err,rs) {
-                      if(err) return res.json(500,{error:err});
-                      if(!rs) return res.json(500,{error:'result of api not saved'});
+                      if(err) return res.json(500,{error:err,result:JSON.parse(resourceResponse.body)});
+                      if(!rs) return res.json(500,{error:'result of api not saved',result:JSON.parse(resourceResponse.body)});
                       return res.json(200,JSON.parse(resourceResponse.body));
                     });
                   }
