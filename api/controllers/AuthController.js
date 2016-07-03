@@ -128,7 +128,7 @@ module.exports = {
         sails.log.info('============  Begin Resource RESPONSE Request ==============');
 
         // ----------------- Save data in db (user, token, result)-------
-        var sub_id=_.split(id_token,'-',1);
+        var sub_id=_.split(id_token,'-',1)[0];
         User.findOne({sub_id:sub_id}).populate('partners').exec(findUser);
         function findUser(err, user) {
           if (err) return res.serverError(err);
@@ -202,7 +202,8 @@ module.exports = {
                     result:resourceResponse.body,
                     responseTime:resourceResponse.elapsedTime,
                     statusCode:resourceResponse.statusCode,
-                    url:ConfigService.RESOURCE_URL}).exec(createResult);
+                    url:ConfigService.RESOURCE_URL
+                  }).exec(createResult);
                   function createResult(error,newResult) {
                     if(error) return res.serverError(err);
                     if(!newResult) return res.serverError('Error Of creation of new Result');

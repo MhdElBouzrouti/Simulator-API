@@ -31,7 +31,7 @@ module.exports = {
     },
     results:{
       collection:'result',
-      via:'url'
+      via:'resource'
     }
   }
 };
