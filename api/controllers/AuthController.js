@@ -22,7 +22,7 @@ module.exports = {
 
     if(!authorization.code) {
       sails.log.error('[Authorization] : The authorization code not returned by openID provider');
-      return res.badRequest('The authorization code not returned by openID provider');
+      return res.json(404,{error:'The authorization code not returned by openID provider'});
     }
 
     /* token variable */
@@ -71,7 +71,7 @@ module.exports = {
     function tokenRequest(tokenError, tokenResponse) {
       if (tokenError) {
         sails.log.error(tokenError);
-        return res.serverError(tokenError);
+        return res.json(500,{error:tokenError});
       }
        // Logs response properties
       sails.log.info('============  Begin TOKEN RESPONSE Request ============');
@@ -84,7 +84,7 @@ module.exports = {
       if (token.error) {
         sails.log.error(token);
         _token_result.error=token;
-        return res.badRequest(token);
+        return res.json(404,{error:token});
       }
       // GET Id_token
       var id_token;
@@ -93,7 +93,7 @@ module.exports = {
       }
       else {
         sails.log.warn('The id_token not founded');
-        return res.badRequest('The id_token not founded, you have to use a openid scope');
+        return res.json(404,{error:'The id_token not founded, you have to use a openid scope'});
       }
 
       if(token.access_token){
@@ -102,7 +102,7 @@ module.exports = {
       else
       {
         sails.log.error('[access_token] : not founded');
-        return res.serverError('access token not founded');
+        return res.json(500,{error:'access token not founded'});
       }
 
       // Step 2. Retrieve resource from API.
@@ -116,11 +116,11 @@ module.exports = {
       function resourceRequest(resourceError, resourceResponse) {
         if (resourceError) {
           sails.log.error(resourceError);
-          return res.badRequest(resourceError);
+          return res.json(404,{error:resourceError});
         }
         if (resourceResponse.body.error) {
           sails.log.error(resourceResponse.body.error);
-          return res.badRequest(resourceResponse.body);
+          return res.json(404,{error:resourceResponse.body});
         }
         // Logs Response RESOURCE API
         sails.log.info('============  Begin Resource RESPONSE Request ==============');
@@ -131,7 +131,7 @@ module.exports = {
         var sub_id=_.split(id_token,'-',1)[0];
         User.findOne({sub_id:sub_id}).populate('partners').exec(findUser);
         function findUser(err, user) {
-          if (err) return res.serverError(err);
+          if (err) return res.json(500,{error:err});
           if (!user) {
             // add user
             User.create({
@@ -143,7 +143,7 @@ module.exports = {
             }).exec(createUser);
             function createUser(err, newUser) {
               if(err)
-                return res.serverError(err);
+                return res.json(500,{error:err});
               newUser.partners.add(id_token.aud[0]);
               // add token
               Token.create({
@@ -155,25 +155,25 @@ module.exports = {
                 resource:ConfigService.RESOURCE_URL
               }).exec(createToken);
               function createToken(err,newToken) {
-                if(err) return res.serverError(err);
-                if(!newToken) return res.serverError('Error of creation of token');
+                if(err) return res.json(500,{error:err});
+                if(!newToken) return res.json(500,{error:'Error of creation of token'});
                 newUser.tokens.add(newToken);
                 newUser.save(function (err, updateUser) {
-                  if(err) return res.serverError(err);
-                  if(!updateUser) return res.serverError('User not updated');
+                  if(err) return res.json(500,{error:err});
+                  if(!updateUser) return res.json(500,{error:'User not updated'});
                   Result.create({
                     result:resourceResponse.body,
                     responseTime:resourceResponse.elapsedTime,
                     url:ConfigService.RESOURCE_URL,
                     statusCode:resourceResponse.statusCode}).exec(createResult);
                   function createResult(error,newResult) {
-                    if(error) return res.serverError(error);
-                    if(!newResult) return res.serverError('Error Of creation of new Result');
+                    if(error) return res.json(500,{error:error});
+                    if(!newResult) return res.json(500,{error:'Error Of creation of new Result'});
                     newResult.calledByToken=newToken;
                     newResult.save(function (err,rs) {
-                      if(err) return res.serverError(err);
-                      if(!rs) return res.serverError('result of api not saved');
-                      return res.json(JSON.parse(resourceResponse.body));
+                      if(err) return res.json(500,{error:err});
+                      if(!rs) return res.json(500,{error:'result of api not saved'});
+                      return res.json(200,JSON.parse(resourceResponse.body));
                     });
                   }
                 });
@@ -185,7 +185,7 @@ module.exports = {
             user.partners.add(id_token.aud[0]);
             user.save(editUser);
             function editUser(err, editUser) {
-              if(err) return res.serverError(err);
+              if(err) return res.json(500,{error:err});
               Token.create({
                 access_token:_token_result.access_token,
                 iat: id_token.iat,
@@ -194,8 +194,8 @@ module.exports = {
                 responseTime: tokenResponse.elapsedTime
               }).exec(createToken);
               function createToken(err,newToken) {
-                if(err) return res.serverError(err);
-                if(!newToken) return res.serverError('Error of creation of token');
+                if(err) return res.json(500,{error:err});
+                if(!newToken) return res.json(500,{error:'Error of creation of token'});
                 newToken.byUser=editUser;
                 newToken.save(function () {
                   Result.create({
@@ -205,11 +205,11 @@ module.exports = {
                     url:ConfigService.RESOURCE_URL
                   }).exec(createResult);
                   function createResult(error,newResult) {
-                    if(error) return res.serverError(err);
-                    if(!newResult) return res.serverError('Error Of creation of new Result');
+                    if(error) return res.json(500,{error:err});
+                    if(!newResult) return res.json(500,{error:'Error Of creation of new Result'});
                     newResult.calledByToken=newToken;
                     newResult.save(function (err,rs) {
-                      return res.json(JSON.parse(resourceResponse.body));
+                      return res.json(200,JSON.parse(resourceResponse.body));
                     });
                   }
                 });
