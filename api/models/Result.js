@@ -23,7 +23,7 @@ module.exports = {
     calledByToken:{
       model:'token'
     },
-    resource:{
+    resource_api:{
       model:'resource'
     }
   }
