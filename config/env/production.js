@@ -19,7 +19,7 @@ module.exports = {
 
    models: {
   connection: 'checkAndGoMongodbServer',
-    migrate: 'drop'
+    migrate: 'alter'
   },
 
   /***************************************************************************
