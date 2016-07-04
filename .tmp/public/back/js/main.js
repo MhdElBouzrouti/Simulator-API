@@ -494,7 +494,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider','toastrConfig', funct
     var deferred = $q.defer();
     if ($auth.isAuthenticated()) {
       //deferred.reject();
-      $location.path('/dashboard');
+      $location.path('/front');
     } else {
       deferred.resolve();
     }

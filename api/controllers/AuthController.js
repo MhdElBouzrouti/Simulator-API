@@ -130,7 +130,7 @@ module.exports = {
         var sub_id = _.split(id_token, '-', 1)[0];
         User.findOne({sub_id: sub_id}).populate('partners').exec(findUser);
         function findUser(err, user) {
-          if (err) return res.json(500, {error: err, type: 'user error'});
+          if (err) return res.json(500, {error: err, type: 'find user error'});
           if (!user) {
             // add user
             User.create({
@@ -142,15 +142,17 @@ module.exports = {
             }).exec(createUser);
             function createUser(err, newUser) {
               if (err)
-                return res.json(500, {error: err, type: 'cration of user'});
+                return res.json(500, {error: err, type: 'creation of user error'});
+              if(!newUser) res.json(400,{error:'The user not created'});
 
               Partner.findOne({client_id: id_token.aud[0]}).exec(findPartner);
               function findPartner(err, partner) {
                 if (err) return res.json(500, {error: err, type: 'find partner'});
-                if (!partner) return res.json(404, {error: 'Partner no founded'});
+                if (!partner) return res.json(404, {error: 'Partner not founded'});
                 newUser.partners.add(partner);
                 newUser.save(addPartner);
-                function addPartner(err, editUser) {
+                function addPartner(err) {
+                  if(err) res.json(500,{error:'Partner not added to user'});
                   Token.create({
                     access_token: _token_result.access_token,
                     iat: id_token.iat,
@@ -162,10 +164,9 @@ module.exports = {
                   function createToken(err, newToken) {
                     if (err) return res.json(500, {error: err, type: 'creation token'});
                     if (!newToken) return res.json(500, {error: 'Error of creation of token'});
-                    editUser.tokens.add(newToken);
-                    editUser.save(function (err, updateUser) {
+                    newUser.tokens.add(newToken);
+                    newUser.save(function (err) {
                       if (err) return res.json(500, {error: err, type: 'save new user'});
-                      if (!updateUser) return res.json(500, {error: 'User not updated'});
                       Result.create({
                         result: JSON.parse(resourceResponse.body),
                         responseTime: resourceResponse.elapsedTime,
@@ -179,12 +180,8 @@ module.exports = {
                           result: JSON.parse(resourceResponse.body)
                         });
                         newResult.calledByToken = newToken;
-                        newResult.save(function (err, rs) {
+                        newResult.save(function (err) {
                           if (err) return res.json(500, {error: err, result: JSON.parse(resourceResponse.body)});
-                          if (!rs) return res.json(500, {
-                            error: 'result of api not saved',
-                            result: JSON.parse(resourceResponse.body)
-                          });
                           return res.json(200, JSON.parse(resourceResponse.body));
                         });
                       }
@@ -200,9 +197,9 @@ module.exports = {
             function findPartner(err, partner) {
               if (err) return res.json(500, {error: err, type: 'find partner'});
               if (!partner) return res.json(404, {error: 'partner not founded'});
-             // user.partners.add(partner);
+             user.partners.add(partner);
               user.save(editUser);
-              function editUser(err, editUser) {
+              function editUser(err) {
                 if (err) return res.json(500, {error: err, type: 'edit user'});
                 Token.create({
                   access_token: _token_result.access_token,
@@ -214,7 +211,7 @@ module.exports = {
                 function createToken(err, newToken) {
                   if (err) return res.json(500, {error: err, type: 'creation of token'});
                   if (!newToken) return res.json(500, {error: 'Error of creation of token'});
-                  newToken.byUser = editUser;
+                  newToken.byUser = user;
                   newToken.save(function () {
 
                     Result.create({
