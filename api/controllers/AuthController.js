@@ -127,7 +127,7 @@ module.exports = {
         sails.log.info('============  Begin Resource RESPONSE Request ==============');
 
         // ----------------- Save data in db (user, token, result)-------
-        var sub_id = _.split(id_token, '-', 1)[0];
+        var sub_id = _.split(id_token, '-', 1);
         User.findOne({sub_id: sub_id}).populate('partners').exec(findUser);
         function findUser(err, user) {
           if (err) return res.json(500, {error: err, type: 'find user error'});
