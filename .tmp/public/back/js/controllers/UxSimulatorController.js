@@ -1,4 +1,4 @@
-angular.module('MetronicApp').controller('UxSimulatorController', function($rootScope, $scope, $http, $timeout,$auth,$window,SatellizerConfig,$location,$auth) {
+angular.module('SimulatorPartner').controller('UxSimulatorController', function($rootScope, $scope, $http, $timeout,$auth,$window,SatellizerConfig,$location,$auth) {
     $scope.$on('$viewContentLoaded', function() {
         // initialize core components
         App.initAjax();

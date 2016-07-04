@@ -1,4 +1,4 @@
-angular.module('MetronicApp').controller('LoginController', function($rootScope, $scope, $http, $timeout,$auth,$location) {
+angular.module('SimulatorPartner').controller('LoginController', function($rootScope, $scope, $http, $timeout,$auth,$location) {
   $scope.$on('$viewContentLoaded', function() {
         App.initAjax(); // initialize core components
 

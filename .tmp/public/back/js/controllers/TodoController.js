@@ -1,6 +1,6 @@
-angular.module('MetronicApp').controller('TodoController', function($rootScope, $scope, $http, $timeout) {
-  $scope.$on('$viewContentLoaded', function() {   
-        App.initAjax(); // initialize core components        
+angular.module('SimulatorPartner').controller('TodoController', function($rootScope, $scope, $http, $timeout) {
+  $scope.$on('$viewContentLoaded', function() {
+        App.initAjax(); // initialize core components
     });
 
     // set sidebar closed and body solid layout mode

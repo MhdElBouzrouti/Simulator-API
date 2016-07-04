@@ -1,9 +1,9 @@
 /***
- Metronic AngularJS App Main Script
+ AngularJS App Main Script
  ***/
 
-/* Metronic App */
-var MetronicApp = angular.module("MetronicApp", [
+/* Simulator App */
+var SimulatorPartner = angular.module("SimulatorPartner", [
   "ui.router",
   "ui.bootstrap",
   "oc.lazyLoad",
@@ -15,7 +15,7 @@ var MetronicApp = angular.module("MetronicApp", [
 ]);
 
 /* Configure ocLazyLoader(refer: https://github.com/ocombe/ocLazyLoad) */
-MetronicApp.config(['$ocLazyLoadProvider','$authProvider', function ($ocLazyLoadProvider,$authProvider) {
+SimulatorPartner.config(['$ocLazyLoadProvider','$authProvider', function ($ocLazyLoadProvider, $authProvider) {
   $ocLazyLoadProvider.config({
     // global configs go here
   });
@@ -46,7 +46,7 @@ MetronicApp.config(['$ocLazyLoadProvider','$authProvider', function ($ocLazyLoad
 
 
 /* Setup global settings */
-MetronicApp.factory('settings', ['$rootScope', function ($rootScope) {
+SimulatorPartner.factory('settings', ['$rootScope', function ($rootScope) {
   // supported languages
   var settings = {
     layout: {
@@ -66,7 +66,7 @@ MetronicApp.factory('settings', ['$rootScope', function ($rootScope) {
 }]);
 
 /* Setup App Main Controller */
-MetronicApp.controller('AppController', ['$scope', '$rootScope', function ($scope, $rootScope) {
+SimulatorPartner.controller('AppController', ['$scope', '$rootScope', function ($scope, $rootScope) {
   $scope.$on('$viewContentLoaded', function () {
     App.initComponents(); // init core components
     //Layout.init(); //  Init entire layout(header, footer, sidebar, etc) on page load if the partials included in server side instead of loading with ng-include directive
@@ -80,7 +80,7 @@ MetronicApp.controller('AppController', ['$scope', '$rootScope', function ($scop
  ***/
 
 /* Setup Layout Part - Header */
-MetronicApp.controller('HeaderController', ['$scope','$auth', function ($scope,$auth) {
+SimulatorPartner.controller('HeaderController', ['$scope','$auth', function ($scope, $auth) {
   console.log($auth.getPayload());
   if($auth.isAuthenticated()){
   $scope.login=$auth.getPayload().sub;
@@ -95,7 +95,7 @@ MetronicApp.controller('HeaderController', ['$scope','$auth', function ($scope,$
     Layout.initHeader(); // init header
   });
 }]);
-MetronicApp.controller('LogoutController', ['$scope','$auth','$location', function ($scope,$auth,$location) {
+SimulatorPartner.controller('LogoutController', ['$scope','$auth','$location', function ($scope, $auth, $location) {
     if (!$auth.isAuthenticated()) { return; }
     $auth.logout()
       .then(function() {
@@ -105,7 +105,7 @@ MetronicApp.controller('LogoutController', ['$scope','$auth','$location', functi
 }]);
 
 /* Setup Layout Part - Sidebar */
-MetronicApp.controller('SidebarController', ['$scope','$auth', function ($scope,$auth) {
+SimulatorPartner.controller('SidebarController', ['$scope','$auth', function ($scope, $auth) {
   $scope.$on('$includeContentLoaded', function () {
     Layout.initSidebar(); // init sidebar
   });
@@ -117,14 +117,14 @@ MetronicApp.controller('SidebarController', ['$scope','$auth', function ($scope,
 
 
 /* Setup Layout Part - Footer */
-MetronicApp.controller('FooterController', ['$scope', function ($scope) {
+SimulatorPartner.controller('FooterController', ['$scope', function ($scope) {
   $scope.$on('$includeContentLoaded', function () {
     Layout.initFooter(); // init footer
   });
 }]);
 
 /* Setup Rounting For All Pages */
-MetronicApp.config(['$stateProvider', '$urlRouterProvider','toastrConfig', function ($stateProvider, $urlRouterProvider,toastrConfig) {
+SimulatorPartner.config(['$stateProvider', '$urlRouterProvider','toastrConfig', function ($stateProvider, $urlRouterProvider, toastrConfig) {
   // Redirect any unmatched url
   $urlRouterProvider.otherwise("/");
 
@@ -144,7 +144,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider','toastrConfig', funct
         loginRequired: loginRequired,
         deps: ['$ocLazyLoad', function ($ocLazyLoad) {
           return $ocLazyLoad.load({
-            name: 'MetronicApp',
+            name: 'SimulatorPartner',
             insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
             files: [
               '../assets/global/plugins/morris/morris.css',
@@ -183,7 +183,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider','toastrConfig', funct
         loginRequired: loginRequired,
         deps: ['$ocLazyLoad', function ($ocLazyLoad) {
           return $ocLazyLoad.load({
-            name: 'MetronicApp',
+            name: 'SimulatorPartner',
             insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
             files: [
               '../assets/global/plugins/morris/morris.css',
@@ -207,7 +207,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider','toastrConfig', funct
         loginRequired: loginRequired,
         deps: ['$ocLazyLoad', function ($ocLazyLoad) {
           return $ocLazyLoad.load({
-            name: 'MetronicApp',
+            name: 'SimulatorPartner',
             insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
             files: [
               '../assets/global/plugins/morris/morris.css',
@@ -232,7 +232,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider','toastrConfig', funct
 
         deps: ['$ocLazyLoad', function ($ocLazyLoad) {
           return $ocLazyLoad.load({
-            name: 'MetronicApp',
+            name: 'SimulatorPartner',
             insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
             files: [
               '../assets/global/plugins/morris/morris.css',
@@ -256,7 +256,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider','toastrConfig', funct
         loginRequired: loginRequired,
         deps: ['$ocLazyLoad', function ($ocLazyLoad) {
           return $ocLazyLoad.load({
-            name: 'MetronicApp',
+            name: 'SimulatorPartner',
             insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
             files: [
               '../assets/global/plugins/morris/morris.css',
@@ -280,7 +280,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider','toastrConfig', funct
           skipIfLoggedIn: skipIfLoggedIn,
         deps: ['$ocLazyLoad', function ($ocLazyLoad) {
           return $ocLazyLoad.load({
-            name: 'MetronicApp',
+            name: 'SimulatorPartner',
             insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
             files: [
               '../assets/global/plugins/morris/morris.css',
@@ -375,7 +375,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider','toastrConfig', funct
       resolve: {
         deps: ['$ocLazyLoad', function ($ocLazyLoad) {
           return $ocLazyLoad.load([{
-            name: 'MetronicApp',
+            name: 'SimulatorPartner',
             insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
             files: [
               '../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css',
@@ -411,7 +411,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider','toastrConfig', funct
       resolve: {
         deps: ['$ocLazyLoad', function ($ocLazyLoad) {
           return $ocLazyLoad.load([{
-            name: 'MetronicApp',
+            name: 'SimulatorPartner',
             insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
             files: [
               '../assets/global/plugins/clockface/css/clockface.css',
@@ -444,7 +444,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider','toastrConfig', funct
       resolve: {
         deps: ['$ocLazyLoad', function ($ocLazyLoad) {
           return $ocLazyLoad.load([{
-            name: 'MetronicApp',
+            name: 'SimulatorPartner',
             insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
             files: [
               '../assets/global/plugins/bootstrap-select/css/bootstrap-select.min.css',
@@ -473,7 +473,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider','toastrConfig', funct
       resolve: {
         deps: ['$ocLazyLoad', function ($ocLazyLoad) {
           return $ocLazyLoad.load({
-            name: 'MetronicApp',
+            name: 'SimulatorPartner',
             insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
             files: [
               '../assets/global/plugins/datatables/datatables.min.css',
@@ -514,7 +514,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider','toastrConfig', funct
 }]);
 
 /* Init global settings and run the app */
-MetronicApp.run(["$rootScope", "settings", "$state", function ($rootScope, settings, $state) {
+SimulatorPartner.run(["$rootScope", "settings", "$state", function ($rootScope, settings, $state) {
   $rootScope.$state = $state; // state to be accessed from view
   $rootScope.$settings = settings; // state to be accessed from view
 }]);

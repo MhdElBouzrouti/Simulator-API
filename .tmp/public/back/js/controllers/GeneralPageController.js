@@ -1,5 +1,5 @@
 /* Setup general page controller */
-angular.module('MetronicApp').controller('GeneralPageController', ['$rootScope', '$scope', 'settings','$auth', function($rootScope, $scope, settings,$auth) {
+angular.module('SimulatorPartner').controller('GeneralPageController', ['$rootScope', '$scope', 'settings','$auth', function($rootScope, $scope, settings,$auth) {
     $scope.$on('$viewContentLoaded', function() {
     	// initialize core components
     	App.initAjax();
