@@ -12,7 +12,7 @@ angular.module('MetronicApp').controller('LoginController', function($rootScope,
     $rootScope.settings.layout.pageSidebarClosed = true;
   $scope.login=function () {
     $auth.login($scope.login_user).then(function () {
-      $location.path('/dashboard');
+      $location.path('/front');
     });
     $rootScope.isAuthenticated=function () {
      return $auth.isAuthenticated();
