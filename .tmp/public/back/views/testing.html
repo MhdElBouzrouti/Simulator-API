@@ -17,6 +17,7 @@
               <th class="numeric"> Response Time </th>
               <th class="numeric"> Date </th>
               <th width="20%"> Result </th>
+              <th width="20%"></th>
             </tr>
             </thead>
             <tbody>
@@ -26,6 +27,10 @@
               <td> {{rs.responseTime}} ms</td>
               <td class="numeric">{{rs.createdAt}}</td>
               <td class="numeric"> <json-formatter json="rs.result" open="0"></json-formatter> </td>
+              <td>
+                <a href="javascript:;" class="btn btn-outline btn-circle btn-sm purple">
+                  <i class="fa fa-remove"></i> Remove </a>
+              </td>
             </tr>
             </tbody>
           </table>
