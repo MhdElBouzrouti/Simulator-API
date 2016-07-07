@@ -3,12 +3,15 @@ angular.module('SimulatorPartner').controller('ConfigMsisdnController', function
         // initialize core components
         App.initAjax();
     });
+  $scope.oidcs=[];
+
   if(!$auth.isAuthenticated()){
     $location.path('/');
   }
   // load data
   loadData();
-  // send data
+
+  // send data to the Server
   $scope.addMsisdn=function () {
     // data structure
     var data={
@@ -16,12 +19,13 @@ angular.module('SimulatorPartner').controller('ConfigMsisdnController', function
       "msisdn":$scope.msisdn,
       "description":$scope.description
     };
+
     // send data to the server
     $http.post('/msisdn',data).then(function (success) {
       $scope.country="";
       $scope.msisdn="";
       $scope.description="";
-
+   // then load data
       loadData();
     },function (failed) {
 
@@ -31,7 +35,7 @@ angular.module('SimulatorPartner').controller('ConfigMsisdnController', function
     $rootScope.settings.layout.pageContentWhite = true;
     $rootScope.settings.layout.pageBodySolid = false;
     $rootScope.settings.layout.pageSidebarClosed = false;
-  $scope.oidcs=[];
+
   function loadData(){
     $http.get('/msisdn?sort=updatedAt').then(function (success) {
       $scope.msisdns=success.data;
