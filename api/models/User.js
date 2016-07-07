@@ -33,6 +33,9 @@ module.exports = {
     },
     identifiedBy:{
       collection:'oidc'
+    },
+    msisdn:{
+      model:'msisdn'
     }
   }
 };

@@ -243,8 +243,7 @@ module.exports = {
     }
   },
   index: function (req, res) {
-    return res.json({title: 'Partner simulator', description: '', version: '0.2'});
+    return res.json({title: 'Partner simulator', description: '', version: '0.2',WebApp:'/back'});
   }
-
 };
 

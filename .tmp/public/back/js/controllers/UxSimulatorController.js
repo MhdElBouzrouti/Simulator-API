@@ -15,7 +15,8 @@ angular.module('SimulatorPartner').controller('UxSimulatorController', function(
   var selectedOption={
     oidcId:-1,
     resourceId:-1,
-    partnerId:-1
+    partnerId:-1,
+    msisdnId:-1
   };
 
   $scope.configuration={

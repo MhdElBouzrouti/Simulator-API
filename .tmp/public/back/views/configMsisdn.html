@@ -1,5 +1,5 @@
 <!-- BEGIN MAIN CONTENT -->
-<div ng-controller="ConfigOidcController">
+<div ng-controller="ConfigMsisdnController">
 
   <div class="row">
     <div class="col-md-12">
@@ -7,7 +7,7 @@
         <div class="portlet box yellow-gold">
           <div class="portlet-title">
             <div class="caption">
-              <i class="fa fa-gift"></i>OPENID CONNECT Settings
+              <i class="fa fa-gift"></i>MSISDN Settings
             </div>
           </div>
           <div class="portlet-body form">
@@ -29,21 +29,21 @@
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label class="col-md-3 control-label">Endpoint Authorization</label>
+                      <label class="col-md-3 control-label">MSISDN : </label>
                       <div class="col-md-4">
-                        <input type="text" class="form-control input-circle" ng-model="auth_uri"
-                               placeholder="Enter The authorization URI">
-                        <span class="help-block"> A block of help text. </span>
+                        <input type="text" class="form-control input-circle" ng-model="msisdn"
+                               placeholder="Enter The MSISDN">
+                        <span class="help-block"> Example: +33605XXXXXX </span>
                       </div>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group last">
-                      <label class="col-md-3 control-label">Endpoint Token </label>
+                      <label class="col-md-3 control-label">Country : </label>
                       <div class="col-md-4">
-                        <input type="text" class="form-control input-circle" ng-model="token_uri"
-                               placeholder="Enter the token URI">
-                        <span class="help-block"> A block of help text. </span>
+                        <input type="text" class="form-control input-circle" ng-model="country"
+                               placeholder="Enter the Country">
+                        <span class="help-block"> Example: France</span>
                       </div>
                     </div>
                   </div>
@@ -53,7 +53,7 @@
               <div class="form-actions">
                 <div class="row">
                   <div class="col-md-offset-3 col-md-9">
-                    <button type="submit" class="btn btn-circle yellow-gold" ng-click="addOidc()">add</button>
+                    <button type="submit" class="btn btn-circle yellow-gold" ng-click="addMsisdn()">add</button>
                     <button type="button" class="btn btn-circle grey-salsa btn-outline">Cancel</button>
                   </div>
                 </div>
@@ -72,7 +72,7 @@
       <div class="portlet box yellow-gold">
         <div class="portlet-title">
           <div class="caption">
-            <i class="fa fa-bell-o"></i>OPENID Provider List
+            <i class="fa fa-bell-o"></i>MSISDN List
           </div>
         </div>
         <div class="portlet-body">
@@ -84,22 +84,22 @@
                   <i class="fa fa-briefcase"></i> Description
                 </th>
                 <th>
-                  <i class="fa fa-user"></i> Endpoint authorization
+                  <i class="fa fa-user"></i> MSISDN
                 </th>
                 <th>
-                  <i class="fa fa-user"></i> endpoint Token
+                  <i class="fa fa-user"></i> Country
                 </th>
                 <th></th>
               </tr>
               </thead>
               <tbody>
-              <tr ng-repeat=" oidc in oidcs">
+              <tr ng-repeat=" msisdn in msisdns">
                 <td class="highlight">
                   <div class="warning"></div>
-                  <a href="javascript:;"> {{oidc.description}} </a>
+                  <a href="javascript:;"> {{msisdn.description}} </a>
                 </td>
-                <td class="hidden-xs">{{oidc.auth_uri}}</td>
-                <td class="hidden-xs">{{oidc.token_uri}}</td>
+                <td class="hidden-xs">{{msisdn.msisdn}}</td>
+                <td class="hidden-xs">{{msisdn.country}}</td>
 
 
                 <td>
@@ -115,6 +115,7 @@
       <!-- END SAMPLE TABLE PORTLET-->
     </div>
   </div>
+
 </div>
 <!-- END MAIN CONTENT -->
 <!-- BEGIN MAIN JS & CSS -->

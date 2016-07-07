@@ -297,7 +297,7 @@ SimulatorPartner.config(['$stateProvider', '$urlRouterProvider','toastrConfig', 
         }]
       }
     })
-    .state('confiOidc', {
+    .state('configOidc', {
       url: "/configOidc",
       templateUrl: "views/configOidc.html",
       data: {pageTitle: 'Settings Dashboard'},
@@ -320,6 +320,29 @@ SimulatorPartner.config(['$stateProvider', '$urlRouterProvider','toastrConfig', 
         }]
       }
     })
+    .state('configMsisdn', {
+      url: "/configMsisdn",
+      templateUrl: "views/configMsisdn.html",
+      data: {pageTitle: 'Settings MSISDN'},
+      controller: "ConfigMsisdnController",
+      resolve: {
+        loginRequired: loginRequired,
+        deps: ['$ocLazyLoad', function ($ocLazyLoad) {
+          return $ocLazyLoad.load({
+            name: 'SimulatorPartner',
+            insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
+            files: [
+              '../assets/global/plugins/morris/morris.css',
+              '../assets/global/plugins/morris/morris.min.js',
+              '../assets/global/plugins/morris/raphael-min.js',
+              '../assets/global/plugins/jquery.sparkline.min.js',
+              '../assets/pages/scripts/dashboard.min.js',
+              'js/controllers/ConfigMsisdnController.js'
+            ]
+          });
+        }]
+      }
+    })
     .state('configPartner', {
       url: "/configPartner",
       templateUrl: "views/configPartner.html",
@@ -329,7 +352,7 @@ SimulatorPartner.config(['$stateProvider', '$urlRouterProvider','toastrConfig', 
         loginRequired: loginRequired,
         deps: ['$ocLazyLoad', function ($ocLazyLoad) {
           return $ocLazyLoad.load({
-            name: 'Configuration',
+            name: 'SimulatorPartner',
             insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
             files: [
               '../assets/global/plugins/morris/morris.css',
@@ -352,7 +375,7 @@ SimulatorPartner.config(['$stateProvider', '$urlRouterProvider','toastrConfig', 
         loginRequired: loginRequired,
         deps: ['$ocLazyLoad', function ($ocLazyLoad) {
           return $ocLazyLoad.load({
-            name: 'Configuration',
+            name: 'SimulatorPartner',
             insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
             files: [
               '../assets/global/plugins/morris/morris.css',
