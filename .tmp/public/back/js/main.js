@@ -114,8 +114,6 @@ SimulatorPartner.controller('SidebarController', ['$scope','$auth', function ($s
   }
 }]);
 
-
-
 /* Setup Layout Part - Footer */
 SimulatorPartner.controller('FooterController', ['$scope', function ($scope) {
   $scope.$on('$includeContentLoaded', function () {
@@ -190,7 +188,6 @@ SimulatorPartner.config(['$stateProvider', '$urlRouterProvider','toastrConfig', 
               '../assets/global/plugins/morris/morris.min.js',
               '../assets/global/plugins/morris/raphael-min.js',
               '../assets/global/plugins/jquery.sparkline.min.js',
-
               '../assets/pages/scripts/dashboard.min.js',
               'js/controllers/OidcController.js'
             ]
@@ -386,103 +383,6 @@ SimulatorPartner.config(['$stateProvider', '$urlRouterProvider','toastrConfig', 
               'js/controllers/ConfigResourceController.js'
             ]
           });
-        }]
-      }
-    })
-    // Form Tools
-    .state('formtools', {
-      url: "/form-tools",
-      templateUrl: "views/form_tools.html",
-      data: {pageTitle: 'Form Tools'},
-      controller: "GeneralPageController",
-      resolve: {
-        deps: ['$ocLazyLoad', function ($ocLazyLoad) {
-          return $ocLazyLoad.load([{
-            name: 'SimulatorPartner',
-            insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
-            files: [
-              '../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css',
-              '../assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css',
-              '../assets/global/plugins/bootstrap-markdown/css/bootstrap-markdown.min.css',
-              '../assets/global/plugins/typeahead/typeahead.css',
-
-              '../assets/global/plugins/fuelux/js/spinner.min.js',
-              '../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js',
-              '../assets/global/plugins/jquery-inputmask/jquery.inputmask.bundle.min.js',
-              '../assets/global/plugins/jquery.input-ip-address-control-1.0.min.js',
-              '../assets/global/plugins/bootstrap-pwstrength/pwstrength-bootstrap.min.js',
-              '../assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js',
-              '../assets/global/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js',
-              '../assets/global/plugins/bootstrap-touchspin/bootstrap.touchspin.js',
-              '../assets/global/plugins/typeahead/handlebars.min.js',
-              '../assets/global/plugins/typeahead/typeahead.bundle.min.js',
-              '../assets/pages/scripts/components-form-tools-2.min.js',
-
-              'js/controllers/GeneralPageController.js'
-            ]
-          }]);
-        }]
-      }
-    })
-
-    // Date & Time Pickers
-    .state('pickers', {
-      url: "/pickers",
-      templateUrl: "views/pickers.html",
-      data: {pageTitle: 'Date & Time Pickers'},
-      controller: "GeneralPageController",
-      resolve: {
-        deps: ['$ocLazyLoad', function ($ocLazyLoad) {
-          return $ocLazyLoad.load([{
-            name: 'SimulatorPartner',
-            insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
-            files: [
-              '../assets/global/plugins/clockface/css/clockface.css',
-              '../assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css',
-              '../assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css',
-              '../assets/global/plugins/bootstrap-colorpicker/css/colorpicker.css',
-              '../assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css',
-
-              '../assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js',
-              '../assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js',
-              '../assets/global/plugins/clockface/js/clockface.js',
-              '../assets/global/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js',
-              '../assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js',
-
-              '../assets/pages/scripts/components-date-time-pickers.min.js',
-
-              'js/controllers/GeneralPageController.js'
-            ]
-          }]);
-        }]
-      }
-    })
-
-    // Custom Dropdowns
-    .state('dropdowns', {
-      url: "/dropdowns",
-      templateUrl: "views/dropdowns.html",
-      data: {pageTitle: 'Custom Dropdowns'},
-      controller: "GeneralPageController",
-      resolve: {
-        deps: ['$ocLazyLoad', function ($ocLazyLoad) {
-          return $ocLazyLoad.load([{
-            name: 'SimulatorPartner',
-            insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
-            files: [
-              '../assets/global/plugins/bootstrap-select/css/bootstrap-select.min.css',
-              '../assets/global/plugins/select2/css/select2.min.css',
-              '../assets/global/plugins/select2/css/select2-bootstrap.min.css',
-
-              '../assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js',
-              '../assets/global/plugins/select2/js/select2.full.min.js',
-
-              '../assets/pages/scripts/components-bootstrap-select.min.js',
-              '../assets/pages/scripts/components-select2.min.js',
-
-              'js/controllers/GeneralPageController.js'
-            ]
-          }]);
         }]
       }
     })
