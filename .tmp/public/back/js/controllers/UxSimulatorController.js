@@ -10,6 +10,7 @@ angular.module('SimulatorPartner').controller('UxSimulatorController', function(
   $scope.oidcs=[];
   $scope.apiResources=[];
   $scope.partners=[];
+  $scope.msisdns=[];
   $scope.result_api;
 
   var selectedOption={
@@ -88,6 +89,10 @@ angular.module('SimulatorPartner').controller('UxSimulatorController', function(
   // Partner Data
   $http.get('/partner').then(function (succed) {
     $scope.partners=succed.data;
+  },function (failed) {
+  });
+  $http.get('/msisdn').then(function (succed) {
+    $scope.msisdns=succed.data;
   },function (failed) {
   });
 
