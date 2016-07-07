@@ -487,32 +487,6 @@ SimulatorPartner.config(['$stateProvider', '$urlRouterProvider','toastrConfig', 
       }
     })
 
-    // Advanced Datatables
-    .state('datatablesAdvanced', {
-      url: "/datatables/managed.html",
-      templateUrl: "views/datatables/managed.html",
-      data: {pageTitle: 'Advanced Datatables'},
-      controller: "GeneralPageController",
-      resolve: {
-        deps: ['$ocLazyLoad', function ($ocLazyLoad) {
-          return $ocLazyLoad.load({
-            name: 'SimulatorPartner',
-            insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
-            files: [
-              '../assets/global/plugins/datatables/datatables.min.css',
-              '../assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css',
-
-              '../assets/global/plugins/datatables/datatables.all.min.js',
-
-              '../assets/pages/scripts/table-datatables-managed.min.js',
-
-              'js/controllers/GeneralPageController.js'
-            ]
-          });
-        }]
-      }
-    })
-
   function skipIfLoggedIn($q, $auth,$location) {
     var deferred = $q.defer();
     if ($auth.isAuthenticated()) {
