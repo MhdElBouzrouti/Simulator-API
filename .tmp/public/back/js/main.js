@@ -121,13 +121,13 @@ SimulatorPartner.controller('FooterController', ['$scope', function ($scope) {
 }]);
 
 /* Setup Rounting For All Pages */
-SimulatorPartner.config(['$stateProvider', '$urlRouterProvider','toastrConfig', function ($stateProvider, $urlRouterProvider, toastrConfig) {
+SimulatorPartner.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
   // Redirect any unmatched url
   $urlRouterProvider.otherwise("/");
 
-  angular.extend(toastrConfig, {
+  /*angular.extend(toastrConfig, {
     target: 'html'
-  });
+  });*/
 
   $stateProvider
 
