@@ -148,6 +148,8 @@ SimulatorPartner.config(['$stateProvider', '$urlRouterProvider', function ($stat
               '../assets/global/plugins/morris/morris.min.js',
               '../assets/global/plugins/morris/raphael-min.js',
               '../assets/global/plugins/jquery.sparkline.min.js',
+              '../assets/global/plugins/chart/chart.min.js',
+              '../assets/global/plugins/angular-chart/angular-chart.min.js',
               '../assets/pages/scripts/dashboard.min.js',
               'js/controllers/DashboardController.js'
             ]
@@ -234,11 +236,13 @@ SimulatorPartner.config(['$stateProvider', '$urlRouterProvider', function ($stat
               '../assets/global/plugins/morris/morris.css',
               '../assets/global/plugins/select2/css/select2.min.css',
               '../assets/global/plugins/select2/css/select2-bootstrap.min.css',
+              '../assets/global/plugins/json-formatter/json-formatter.min.css',
               '../assets/global/plugins/morris/morris.min.js',
               '../assets/global/plugins/morris/raphael-min.js',
               '../assets/global/plugins/jquery.sparkline.min.js',
               '../assets/global/plugins/select2/js/select2.full.min.js',
               '../assets/global/plugins/bootstrap-wizard/jquery.bootstrap.wizard.min.js',
+              '../assets/global/plugins/json-formatter/json-formatter.min.js',
 
               '../assets/pages/scripts/dashboard.min.js',
               'js/controllers/UxSimulatorController.js'
