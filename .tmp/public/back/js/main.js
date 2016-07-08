@@ -260,9 +260,15 @@ SimulatorPartner.config(['$stateProvider', '$urlRouterProvider', function ($stat
             insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
             files: [
               '../assets/global/plugins/morris/morris.css',
+              '../assets/global/plugins/bootstrap-select/css/bootstrap-select.min.css',
               '../assets/global/plugins/morris/morris.min.js',
               '../assets/global/plugins/morris/raphael-min.js',
               '../assets/global/plugins/jquery.sparkline.min.js',
+              '../assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js',
+              '../assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js',
+              '../assets/global/plugins/jquery.blockui.min.js',
+              '../assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js',
+              '../assets/pages/scripts/components-bootstrap-select.min.js',
 
               '../assets/pages/scripts/dashboard.min.js',
               'js/controllers/PerformanceController.js'
