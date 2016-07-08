@@ -148,8 +148,6 @@ SimulatorPartner.config(['$stateProvider', '$urlRouterProvider', function ($stat
               '../assets/global/plugins/morris/morris.min.js',
               '../assets/global/plugins/morris/raphael-min.js',
               '../assets/global/plugins/jquery.sparkline.min.js',
-              '../assets/global/plugins/chart/chart.min.js',
-              '../assets/global/plugins/angular-chart/angular-chart.min.js',
               '../assets/pages/scripts/dashboard.min.js',
               'js/controllers/DashboardController.js'
             ]
