@@ -6,6 +6,12 @@
  */
 var request=require('request');
 module.exports = {
+  /**
+   * @api {post} /perform Get a response time of call
+   * @apiVersion 0.2.0
+   * @apiGroup Performance
+   *
+   */
   apiCall: function (req, res) {
 
     var accessToken = req.allParams().accessToken;

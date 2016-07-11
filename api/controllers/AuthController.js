@@ -7,6 +7,18 @@
 var request = require('request');
 var _ = require('lodash');
 module.exports = {
+  /**
+   * @api {post} /auth/callback?code=:code&state=:state&scope=:scope Receive a code of authorization
+   * @apiVersion 0.2.0
+   * @apiName CallBack URL
+   * @apiGroup Authorization
+   * @apiParam {string} code A Code of authorization
+   * @apiParam {string} scope A scope of authorization
+   * @apiParam {string} state A state of authorization
+   * @apiParamExample {url} Request-Example
+   *  POST /auth/callback?code=OFR-a1d08fcd....d35b&state=t8acxb5irr&scope=openid form_filling
+   *
+     */
   authorization: function (req, res) {
     ////////////////////////////
     /* variables declaration */
@@ -71,7 +83,7 @@ module.exports = {
     function tokenRequest(tokenError, tokenResponse) {
       if (tokenError) {
         sails.log.error(tokenError);
-        return res.json(500, {error: tokenError, type: 'token error'});
+        return res.json(500, {error: tokenError, Contexte:ConfigService.ACCESS_TOKEN_URL});
       }
       // Logs response properties
       sails.log.info('============  Begin TOKEN RESPONSE Request ============');
@@ -242,8 +254,14 @@ module.exports = {
       }
     }
   },
+  /**
+   * @api {get} / Get a general information
+   * @apiVersion 0.2.0
+   * @apiName Description of the API
+   * @apiGroup Index
+   */
   index: function (req, res) {
-    return res.json({title: 'Partner simulator', description: '', version: '0.2',WebApp:'/back'});
+    return res.json({title: 'Partner simulator', description: 'A basic simulator to consume Orange APIs', version: '0.2',WebApp:'/back',ApiDoc:'/apidoc'});
   }
 };
 

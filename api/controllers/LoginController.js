@@ -6,6 +6,13 @@
  */
 
 module.exports = {
+  /**
+   * @api {post} /login Authentication of User
+   * @apiParam {string} username a username
+   * @apiParam {string} password a password
+   * @apiVersion 0.2.0
+   * @apiGroup Login
+   */
   login:function (req, res) {
     var username= req.allParams().username,
       password=req.allParams().password;

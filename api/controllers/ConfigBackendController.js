@@ -6,6 +6,22 @@
  */
 var fs = require('fs');
 module.exports = {
+  /**
+   * @api {post} /config A configure of the backend
+   * @apiVersion 0.2.0
+   * @apiGroup Configuration
+   * @apiParam {integer} clientID A ID of the client (Service Provider)
+   * @apiParam {integer} resourceID A ID of resource API
+   * @apiParam {integer} oidcID A ID of OpenID Provider
+   * @apiParam {integer} state A state of authorization
+   * @apiParamExample {json} Request-Example
+   *    {
+   *      "clientID":,
+   *      "resourceID":,
+   *      "oidcID":,
+   *      "state":
+   *    }
+   */
   config: function (req, res) {
     sails.log.info('====== Begin Configuration Request =======');
     var partnerId = req.allParams().partnerId;
