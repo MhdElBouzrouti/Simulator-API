@@ -21,6 +21,8 @@ module.exports = {
    *      "oidcID":,
    *      "state":
    *    }
+   * @apiError LockOfInformationError the lack of information to complete the operation.
+   * @apiError DataAccessError Errors access to the data.
    */
   config: function (req, res) {
     sails.log.info('====== Begin Configuration Request =======');
@@ -29,12 +31,12 @@ module.exports = {
     var oidcId = req.allParams().oidcId;
 
     if (!partnerId || !resourceId || !oidcId) {
-      return res.json(403, {message: 'Warn', description: 'some Information needed'});
+      return res.json(403, {type: 'LockOfInformationError', message: 'the lack of PartnerId, ResourceID Or ResourceID '});
     }
     Partner.findOne({id:partnerId}).exec(function (err, partner) {
 
-      if(err) return  res.json(500,{error:'Error request to partner'});
-      if(!partner) return res.json(400,{message:'Partner not founded'});
+      if(err) return  res.json(500,{type:'DataAccessError',message:err});
+      if(!partner) return res.json(400,{type:'DataAccessError',message:'Partner not founded'});
 
       ConfigService.CLIENT_ID=partner.client_id;
       ConfigService.CLIENT_SECRET=partner.client_secret;
@@ -51,17 +53,17 @@ module.exports = {
       // GET API RESOURCE URL from db
       Resource.findOne({id:resourceId}).exec(function (err, resource) {
 
-        if(err) return res.json(500,{error:'Error request to resource'});
+        if(err) return res.json(500,{type:'DataAccessError',message:err});
 
-        if(!resource) return res.json(400,{message:'Partner not founded'});
+        if(!resource) return res.json(400,{type:'DataAccessError',message:'Partner not founded'});
 
         ConfigService.RESOURCE_URL=resource.base+'/'+resource.offer+'/'+resource.country+'/'+resource.version+'/'+resource.path;
         sails.log.info('[API RESOURCE] : ' + ConfigService.RESOURCE_URL);
 
         // GET oidc
         Oidc.findOne({id:oidcId}).exec(function (err, oidc) {
-          if(err) return res.json(500,{error:'Error request to resource'});
-          if(!oidc) return res.json(400,{message:'Partner not founded'});
+          if(err) return res.json(500,{message:err,type:'DataAccessError'});
+          if(!oidc) return res.json(404,{type:'DataAccessError',message:'Partner not founded'});
           ConfigService.ACCESS_TOKEN_URL=oidc.token_uri;
           sails.log.info('====== End Configuration Request =======');
           return res.json('Ok');

@@ -125,6 +125,24 @@ define({ "api": [
         }
       ]
     },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "LockOfInformationError",
+            "description": "<p>the lack of information to complete the operation.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "DataAccessError",
+            "description": "<p>Errors access to the data.</p>"
+          }
+        ]
+      }
+    },
     "filename": "api/controllers/ConfigBackendController.js",
     "groupTitle": "Configuration",
     "name": "PostConfig",
