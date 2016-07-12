@@ -1,8 +1,8 @@
 {
   "name": "Simulator",
   "version": "0.2.0",
+  "title": "Simulator API documentation",
   "description": "A basic simulator to consume Orange APIs",
   "url":"http://checkandgo-orangegroup.rhcloud.com",
-  "sampleUrl":"http://checkandgo-orangegroup.rhcloud.com",
-  "title": "Simulator API documentation"
+  "sampleUrl":"http://checkandgo-orangegroup.rhcloud.com"
 }

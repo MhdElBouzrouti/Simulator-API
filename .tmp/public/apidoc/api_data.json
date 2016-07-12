@@ -4,8 +4,6 @@
     "url": "/auth/callback?code=:code&state=:state&scope=:scope",
     "title": "Receive a code of authorization",
     "version": "0.2.0",
-    "name": "CallBack_URL",
-    "group": "Authorization",
     "parameter": {
       "fields": {
         "Parameter": [
@@ -40,6 +38,38 @@
         }
       ]
     },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "AuthorizationError",
+            "description": "<p>Error from Authorization Server (OIDC).</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "TokenError",
+            "description": "<p>Error from token Server (OIDC).</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "ResourceError",
+            "description": "<p>Error from API resource.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "SimulatorError",
+            "description": "<p>Error from Simulator API</p>"
+          }
+        ]
+      }
+    },
+    "name": "CallBack_URL",
+    "group": "Authorization",
     "filename": "api/controllers/AuthController.js",
     "groupTitle": "Authorization",
     "sampleRequest": [
