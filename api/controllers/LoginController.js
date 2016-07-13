@@ -7,7 +7,7 @@
 
 module.exports = {
   /**
-   * @api {post} /login Authentication of User
+   * @api {post} /auth/login Authentication of User
    * @apiParam {string} username a username
    * @apiParam {string} password a password
    * @apiVersion 0.2.0

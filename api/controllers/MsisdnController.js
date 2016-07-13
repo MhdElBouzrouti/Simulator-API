@@ -8,6 +8,7 @@
 module.exports = {
   /**
    * @api {get} /msisdn/:id Get a MSISDN
+   * @apiHeader {string} Authorization token.
    * @apiParam {Number} id ID of MSISDN.
    * @apiSuccess {string} country
    * @apiSuccess {string} createdAt
@@ -62,7 +63,8 @@ module.exports = {
    * PUT /msisdn/1a5e66cxxxxx
    *  {
    *    "msisdn":"336444xxxxx",
-   *    "description:"User x - France - 336444xxxxx"
+   *    "description:"User x - France - 336444xxxxx",
+   *    "country": "France"
    *  }
    * @apiVersion 0.2.0
    * @apiGroup MSISDN

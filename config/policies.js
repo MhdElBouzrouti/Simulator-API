@@ -26,9 +26,11 @@ module.exports.policies = {
   *                                                                          *
   ***************************************************************************/
 
-   '*': true,
-  UserController:true,
-  AuthController:true
+   '*': 'jwtAuth',
+  AuthController:true,
+  LoginController:true
+
+
 
   /***************************************************************************
   *                                                                          *

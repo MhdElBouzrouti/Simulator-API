@@ -8,6 +8,17 @@ var request=require('request');
 module.exports = {
   /**
    * @api {post} /perform Get a response time of call
+   * @apiHeader {string} Authorization token.
+   * @apiParam {string} accessToken Access token
+   * @apiParam {number} times Number of times
+   * @apiParam {string} url API url
+   * @apiParamExample {json} Request-Example
+   *  POST /perfom
+   *   {
+   *      accessToken:'OFR-434efa344....ea1987ae',
+   *      times:5,
+   *      url:'https://api.orange.com/formfilling/fr/v1/userinfo'
+   *   }
    * @apiVersion 0.2.0
    * @apiGroup Performance
    *

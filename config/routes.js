@@ -43,11 +43,6 @@ module.exports.routes = {
     controller: 'AuthController',
     action: 'index'
   },
-  'GET /testconfig': {
-    controller: 'TestConfigController',
-    action: 'config'
-
-  },
   'POST /config': {
     controller: 'ConfigBackendController',
     action: 'config'

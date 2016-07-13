@@ -8,6 +8,7 @@ var fs = require('fs');
 module.exports = {
   /**
    * @api {post} /config A configure of the backend
+   * @apiHeader {string} Authorization token.
    * @apiVersion 0.2.0
    * @apiGroup Configuration
    * @apiParam {integer} clientID A ID of the client (Service Provider)
@@ -15,11 +16,12 @@ module.exports = {
    * @apiParam {integer} oidcID A ID of OpenID Provider
    * @apiParam {integer} state A state of authorization
    * @apiParamExample {json} Request-Example
+   *  POST /config
    *    {
-   *      "clientID":,
-   *      "resourceID":,
-   *      "oidcID":,
-   *      "state":
+   *      "clientID":'13ef43',
+   *      "resourceID":'efgh',
+   *      "oidcID":'456fae6',
+   *      "state":'bc2e34de4'
    *    }
    * @apiError LockOfInformationError the lack of information to complete the operation.
    * @apiError DataAccessError Errors access to the data.

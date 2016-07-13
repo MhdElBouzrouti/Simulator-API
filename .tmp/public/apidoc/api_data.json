@@ -82,6 +82,19 @@
     "type": "post",
     "url": "/config",
     "title": "A configure of the backend",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>token.</p>"
+          }
+        ]
+      }
+    },
     "version": "0.2.0",
     "group": "Configuration",
     "parameter": {
@@ -120,7 +133,7 @@
       "examples": [
         {
           "title": "Request-Example",
-          "content": "{\n  \"clientID\":,\n  \"resourceID\":,\n  \"oidcID\":,\n  \"state\":\n}",
+          "content": "POST /config\n  {\n    \"clientID\":'13ef43',\n    \"resourceID\":'efgh',\n    \"oidcID\":'456fae6',\n    \"state\":'bc2e34de4'\n  }",
           "type": "json"
         }
       ]
@@ -169,7 +182,7 @@
   },
   {
     "type": "post",
-    "url": "/login",
+    "url": "/auth/login",
     "title": "Authentication of User",
     "parameter": {
       "fields": {
@@ -195,10 +208,10 @@
     "group": "Login",
     "filename": "api/controllers/LoginController.js",
     "groupTitle": "Login",
-    "name": "PostLogin",
+    "name": "PostAuthLogin",
     "sampleRequest": [
       {
-        "url": "http://checkandgo-orangegroup.rhcloud.com/login"
+        "url": "http://checkandgo-orangegroup.rhcloud.com/auth/login"
       }
     ]
   },
@@ -234,6 +247,19 @@
     "type": "get",
     "url": "/msisdn/:id",
     "title": "Get a MSISDN",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>token.</p>"
+          }
+        ]
+      }
+    },
     "parameter": {
       "fields": {
         "Parameter": [
@@ -395,7 +421,7 @@
       "examples": [
         {
           "title": "Request-Example",
-          "content": "PUT /msisdn/1a5e66cxxxxx\n {\n   \"msisdn\":\"336444xxxxx\",\n   \"description:\"User x - France - 336444xxxxx\"\n }",
+          "content": "PUT /msisdn/1a5e66cxxxxx\n {\n   \"msisdn\":\"336444xxxxx\",\n   \"description:\"User x - France - 336444xxxxx\",\n   \"country\": \"France\"\n }",
           "type": "json"
         }
       ]
@@ -415,6 +441,31 @@
     "type": "DELETE",
     "url": "/oidc/:id",
     "title": "Delete a OIDC Configuration",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>access token.</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "optional": false,
+            "field": "id",
+            "description": "<p>ID of Oidc</p>"
+          }
+        ]
+      }
+    },
     "version": "0.2.0",
     "group": "OIDC",
     "filename": "api/controllers/OidcController.js",
@@ -430,6 +481,19 @@
     "type": "get",
     "url": "/oidc/:id",
     "title": "Get a OIDC Configuration",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>access token.</p>"
+          }
+        ]
+      }
+    },
     "parameter": {
       "fields": {
         "Parameter": [
@@ -437,7 +501,7 @@
             "group": "Parameter",
             "optional": false,
             "field": "id",
-            "description": ""
+            "description": "<p>ID of Oidc</p>"
           }
         ]
       }
@@ -448,24 +512,34 @@
         "Success 200": [
           {
             "group": "Success 200",
+            "type": "string",
             "optional": false,
             "field": "auth_uri",
             "description": ""
           },
           {
             "group": "Success 200",
+            "type": "string",
             "optional": false,
             "field": "description",
             "description": ""
           },
           {
             "group": "Success 200",
+            "type": "string",
             "optional": false,
             "field": "token_uri",
             "description": ""
           }
         ]
-      }
+      },
+      "examples": [
+        {
+          "title": "Request-Example",
+          "content": "GET /oidc/57794aac1305f74f17036250\n {\n   \"auth_uri\": \"https://api.orange.com/openidconnect/fr/v1/authorize\",\n   \"createdAt\": \"2016-07-03T17:26:04.837Z\",\n   \"description\": \"Orange France - OpenID Connect\",\n   \"token_uri\": \"https://api.orange.com/openidconnect/fr/v1/token\",\n   \"updatedAt\": \"2016-07-07T09:19:17.479Z\",\n   \"id\": \"57794aac1305f74f17036250\"\n }",
+          "type": "json"
+        }
+      ]
     },
     "group": "OIDC",
     "filename": "api/controllers/OidcController.js",
@@ -481,24 +555,40 @@
     "type": "POST",
     "url": "/oidc",
     "title": "Create a OIDC Configuration",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>access token.</p>"
+          }
+        ]
+      }
+    },
     "version": "0.2.0",
     "parameter": {
       "fields": {
         "Parameter": [
           {
             "group": "Parameter",
+            "type": "string",
             "optional": false,
             "field": "auth_uri",
             "description": ""
           },
           {
             "group": "Parameter",
+            "type": "string",
             "optional": false,
             "field": "description",
             "description": ""
           },
           {
             "group": "Parameter",
+            "type": "string",
             "optional": false,
             "field": "token_uri",
             "description": ""
@@ -527,6 +617,19 @@
     "type": "PUT",
     "url": "/msisdn/:id",
     "title": "Edit a OIDC Configuration",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>access token.</p>"
+          }
+        ]
+      }
+    },
     "version": "0.2.0",
     "parameter": {
       "fields": {
@@ -536,6 +639,27 @@
             "optional": false,
             "field": "id",
             "description": "<p>a ID of the OIDC</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "auth_uri",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "description",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "token_uri",
+            "description": ""
           }
         ]
       },
@@ -561,6 +685,32 @@
     "type": "DELETE",
     "url": "/partner/:id",
     "title": "Delete a Partner",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>token.</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "id",
+            "description": ""
+          }
+        ]
+      }
+    },
     "version": "0.2.0",
     "group": "Partner",
     "filename": "api/controllers/PartnerController.js",
@@ -574,16 +724,83 @@
   },
   {
     "type": "get",
-    "url": "/partner",
+    "url": "/partner/:id",
     "title": "Get a Partner",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>token.</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "id",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "client_id",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "client_secret",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "description",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "redirect_uri",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example",
+          "content": "GET /partner/57794axxxxxxxxxxxx6251\n {\n   \"client_id\": \"TmAxxxxxxxxxxxxxxxxxBd\",\n   \"client_secret\": \"gxxxxxxxxxxxxxxxxx\",\n   \"createdAt\": \"2016-07-03T17:27:18.625Z\",\n   \"description\": \"xxxx xx - Login/Password\",\n   \"redirect_uri\": \"http://checkandgo-orangegroup.rhcloud.com/auth/callback\",\n   \"updatedAt\": \"2016-07-07T09:03:05.957Z\",\n   \"id\": \"57794axxxxxxxxxxxx6251\"\n }",
+          "type": "json"
+        }
+      ]
+    },
     "version": "0.2.0",
     "group": "Partner",
     "filename": "api/controllers/PartnerController.js",
     "groupTitle": "Partner",
-    "name": "GetPartner",
+    "name": "GetPartnerId",
     "sampleRequest": [
       {
-        "url": "http://checkandgo-orangegroup.rhcloud.com/partner"
+        "url": "http://checkandgo-orangegroup.rhcloud.com/partner/:id"
       }
     ]
   },
@@ -591,6 +808,67 @@
     "type": "POST",
     "url": "/partner",
     "title": "Create a Partner",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>token.</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "id",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "client_id",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "client_secret",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "description",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "redirect_uri",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example",
+          "content": "POST /partner\n {\n   \"client_id\": \"TmAxxxxxxxxxxxxxxxxxBd\",\n   \"client_secret\": \"gxxxxxxxxxxxxxxxxx\",\n   \"description\": \"xxxx xx - Login/Password\",\n   \"redirect_uri\": \"http://checkandgo-orangegroup.rhcloud.com/auth/callback\",\n   \"id\": \"57794axxxxxxxxxxxx6251\"\n }",
+          "type": "json"
+        }
+      ]
+    },
     "version": "0.2.0",
     "group": "Partner",
     "filename": "api/controllers/PartnerController.js",
@@ -606,6 +884,32 @@
     "type": "PUT",
     "url": "/partner/:id",
     "title": "Edit a Partner",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>token.</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "id",
+            "description": "<ul> <li>@apiParamExample {json} Request-Example PUT /partner { &quot;client_id&quot;: &quot;TmAxxxxxxxxxxxxxxxxxBd&quot;, &quot;client_secret&quot;: &quot;gxxxxxxxxxxxxxxxxx&quot;, &quot;id&quot;: &quot;57794axxxxxxxxxxxx6251&quot; }</li> </ul>"
+          }
+        ]
+      }
+    },
     "version": "0.2.0",
     "group": "Partner",
     "filename": "api/controllers/PartnerController.js",
@@ -621,6 +925,53 @@
     "type": "post",
     "url": "/perform",
     "title": "Get a response time of call",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>token.</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "accessToken",
+            "description": "<p>Access token</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "times",
+            "description": "<p>Number of times</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "url",
+            "description": "<p>API url</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example",
+          "content": "POST /perfom\n {\n    accessToken:'OFR-434efa344....ea1987ae',\n    times:5,\n    url:'https://api.orange.com/formfilling/fr/v1/userinfo'\n }",
+          "type": "json"
+        }
+      ]
+    },
     "version": "0.2.0",
     "group": "Performance",
     "filename": "api/controllers/CallResourceApiController.js",
@@ -636,6 +987,32 @@
     "type": "DELETE",
     "url": "/resource/:id",
     "title": "Delete a Resource",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>token.</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "id",
+            "description": ""
+          }
+        ]
+      }
+    },
     "version": "0.2.0",
     "group": "Resource",
     "filename": "api/controllers/ResourceController.js",
@@ -651,6 +1028,87 @@
     "type": "get",
     "url": "/resource",
     "title": "Get a resource",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>token.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "country",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "description",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "offer",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "path",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "scope",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "version",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example",
+          "content": "GET /resource/577xxxxxxxxxx6a1\n\n{\n   \"base\": \"https://api.orange.com\",\n   \"country\": \"fr\",\n   \"createdAt\": \"2016-07-04T10:37:05.796Z\",\n   \"description\": \"Orange France - Location check - Production\",\n   \"offer\": \"locationcheck\",\n   \"path\": \"premiuminfo\",\n   \"scope\": \"location_check\",\n   \"updatedAt\": \"2016-07-04T10:39:39.635Z\",\n   \"version\": \"v1\",\n   \"id\": \"577xxxxxxxxxx6a1\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "id",
+            "description": ""
+          }
+        ]
+      }
+    },
     "version": "0.2.0",
     "group": "Resource",
     "filename": "api/controllers/ResourceController.js",
@@ -666,6 +1124,74 @@
     "type": "POST",
     "url": "/resource",
     "title": "Create a Resource",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>token.</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "country",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "description",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "offer",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "path",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "scope",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "version",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example",
+          "content": "POST /resource\n{\n   \"base\": \"https://api.orange.com\",\n   \"country\": \"fr\",\n   \"description\": \"Orange France - Location check - Production\",\n   \"offer\": \"locationcheck\",\n   \"path\": \"premiuminfo\",\n   \"scope\": \"location_check\",\n   \"version\": \"v1\",\n   \"id\": \"577xxxxxxxxxx6a1\"\n}",
+          "type": "json"
+        }
+      ]
+    },
     "version": "0.2.0",
     "group": "Resource",
     "filename": "api/controllers/ResourceController.js",
@@ -679,16 +1205,63 @@
   },
   {
     "type": "PUT",
-    "url": "/resource/:id",
+    "url": "/resource",
     "title": "Edit a Resource",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>token.</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "id",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "country",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "description",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example",
+          "content": "PUT /resource\n{\n   \"base\": \"https://api.orange.com\",\n   \"country\": \"fr\",\n   \"description\": \"Orange France - Location check - Production\",\n   \"id\": \"577xxxxxxxxxx6a1\"\n}",
+          "type": "json"
+        }
+      ]
+    },
     "version": "0.2.0",
     "group": "Resource",
     "filename": "api/controllers/ResourceController.js",
     "groupTitle": "Resource",
-    "name": "PutResourceId",
+    "name": "PutResource",
     "sampleRequest": [
       {
-        "url": "http://checkandgo-orangegroup.rhcloud.com/resource/:id"
+        "url": "http://checkandgo-orangegroup.rhcloud.com/resource"
       }
     ]
   },
@@ -696,6 +1269,31 @@
     "type": "DELETE",
     "url": "/result/:id",
     "title": "Delete a Result",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>token.</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Id of Result</p>"
+          }
+        ]
+      }
+    },
     "version": "0.2.0",
     "group": "Result",
     "filename": "api/controllers/ResultController.js",
@@ -711,6 +1309,19 @@
     "type": "get",
     "url": "/result/:id",
     "title": "Get a Result",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>token.</p>"
+          }
+        ]
+      }
+    },
     "parameter": {
       "fields": {
         "Parameter": [
@@ -769,7 +1380,14 @@
             "description": "<p>Get a result of the API</p>"
           }
         ]
-      }
+      },
+      "examples": [
+        {
+          "title": "Request-Example",
+          "content": " {\n  \"createdAt\": \"2016-07-04T09:13:39.022Z\",\n  \"responseTime\": 1156,\n  \"result\": {\n          \"locale\": \"fr-FR\",\n          \"birthdate\": \"19xx-0x-x0\",\n          \"name\": \"xxxxxxxx xxx\",\n          \"given_name\": \"xxxxxxxxxx\",\n          \"family_name\": \"xxx',\n          \"gender\": \"male\",\n          \"updated_at\": 1465287033,\n          \"email\": \"xxxxxxxx.xxx@xxx.com\",\n          \"phone_number\": \"+33(0)xxxxxxxxx9\",\n          \"sub\": \"HZLOHU-200-yOxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=\"\n          },\n  \"statusCode\": 200,\n  \"updatedAt\": \"2016-07-04T09:13:39.052Z\",\n  \"url\": \"https://api.orange.com/formfilling/fr/v1/userinfo\",\n  \"id\": \"577axxxxxxxxx3268a\"\n}",
+          "type": "json"
+        }
+      ]
     },
     "version": "0.2.0",
     "group": "Result",
@@ -786,21 +1404,19 @@
     "type": "DELETE",
     "url": "/token/:id",
     "title": "Delete a Token",
-    "version": "0.2.0",
-    "group": "Token",
-    "filename": "api/controllers/TokenController.js",
-    "groupTitle": "Token",
-    "name": "DeleteTokenId",
-    "sampleRequest": [
-      {
-        "url": "http://checkandgo-orangegroup.rhcloud.com/token/:id"
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>token.</p>"
+          }
+        ]
       }
-    ]
-  },
-  {
-    "type": "get",
-    "url": "/token/:id",
-    "title": "Get a Token",
+    },
     "parameter": {
       "fields": {
         "Parameter": [
@@ -818,10 +1434,196 @@
     "group": "Token",
     "filename": "api/controllers/TokenController.js",
     "groupTitle": "Token",
+    "name": "DeleteTokenId",
+    "sampleRequest": [
+      {
+        "url": "http://checkandgo-orangegroup.rhcloud.com/token/:id"
+      }
+    ]
+  },
+  {
+    "type": "get",
+    "url": "/token/:id",
+    "title": "Get a Token",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>token.</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "id",
+            "description": "<p>ID of the token.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "access_token",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "exp",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "iat",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "resource",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "responseTime",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "statusCode",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example",
+          "content": "GET /token/577a28xxxxxxxx89\n{\n   \"access_token\": \"OFR-56dcb65b4xxxxxxxxxxx53491e6710f64204920d\",\n   \"createdAt\": \"2016-07-04T09:13:39.006Z\",\n   \"exp\": \"1467627218\",\n   \"iat\": \"1467623618\",\n   \"resource\": \"https://api.orange.com/formfilling/fr/v1/userinfo\",\n   \"responseTime\": 746,\n   \"statusCode\": 200,\n   \"updatedAt\": \"2016-07-04T09:13:39.037Z\",\n   \"id\": \"577a28xxxxxxxx89\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.2.0",
+    "group": "Token",
+    "filename": "api/controllers/TokenController.js",
+    "groupTitle": "Token",
     "name": "GetTokenId",
     "sampleRequest": [
       {
         "url": "http://checkandgo-orangegroup.rhcloud.com/token/:id"
+      }
+    ]
+  },
+  {
+    "type": "DELETE",
+    "url": "/user/:id",
+    "title": "Delete a Resource",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>token.</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.2.0",
+    "group": "User",
+    "filename": "api/controllers/UserController.js",
+    "groupTitle": "User",
+    "name": "DeleteUserId",
+    "sampleRequest": [
+      {
+        "url": "http://checkandgo-orangegroup.rhcloud.com/user/:id"
+      }
+    ]
+  },
+  {
+    "type": "get",
+    "url": "/user",
+    "title": "Get a resource",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>token.</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.2.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "auth_code",
+            "description": "<p>A authorization code</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "auth_time",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "iss",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "sub",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "group": "User",
+    "filename": "api/controllers/UserController.js",
+    "groupTitle": "User",
+    "name": "GetUser",
+    "sampleRequest": [
+      {
+        "url": "http://checkandgo-orangegroup.rhcloud.com/user"
       }
     ]
   }
