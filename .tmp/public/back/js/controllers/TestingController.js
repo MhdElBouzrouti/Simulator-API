@@ -11,14 +11,23 @@ angular.module('SimulatorPartner').controller('TestingController', function($roo
     $rootScope.settings.layout.pageBodySolid = false;
     $rootScope.settings.layout.pageSidebarClosed = false;
   $scope.results=[];
-  $http({
-    method:'GET',
-    url:'/result?sort=createdAt DESC'
-  }).then(function (response) {
-    console.log(response.data);
-    $scope.results=response.data;
+  function loadData() {
+    $http({
+      method:'GET',
+      url:'/result?sort=createdAt DESC'
+    }).then(function (response) {
+      console.log(response.data);
+      $scope.results=response.data;
 
-  },function (error) {
-    console.log(error);
-  });
+    },function (error) {
+      console.log(error);
+    });
+  }
+  loadData();
+
+  $scope.removeData=function(id){
+    $http.delete('/result/'+id).then(function (success) {
+      loadData();
+    });
+  }
 });

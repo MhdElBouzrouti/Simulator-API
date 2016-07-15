@@ -37,6 +37,11 @@ angular.module('SimulatorPartner').controller('ConfigResourceController', functi
       console.log(success.data);
     });
   }
+  $scope.removeData=function(id){
+    $http.delete('/resource/'+id).then(function (success) {
+      loadData();
+    });
+  }
 
 });
 

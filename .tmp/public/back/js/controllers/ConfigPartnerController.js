@@ -35,5 +35,10 @@ angular.module('SimulatorPartner').controller('ConfigPartnerController', functio
       console.log(success.data);
     });
   }
+  $scope.removeData=function(id){
+    $http.delete('/partner/'+id).then(function (success) {
+      loadData();
+    });
+  }
 
 });

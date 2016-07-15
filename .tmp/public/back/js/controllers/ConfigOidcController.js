@@ -34,5 +34,11 @@ angular.module('SimulatorPartner').controller('ConfigOidcController', function($
       console.log(success.data);
     });
   }
+  $scope.removeData=function(id){
+    $http.delete('/oidc/'+id).then(function (success) {
+      loadData();
+    });
+  }
+
 
 });

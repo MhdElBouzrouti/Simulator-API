@@ -42,5 +42,10 @@ angular.module('SimulatorPartner').controller('ConfigMsisdnController', function
       console.log(success.data);
     });
   }
+  $scope.removeData=function(id){
+    $http.delete('/msisdn/'+id).then(function (success) {
+      loadData();
+    });
+  }
 
 });
